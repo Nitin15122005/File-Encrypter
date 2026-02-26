@@ -1,37 +1,25 @@
-node {
+pipeline {
+ agent { label 'agent' }
 
- try {
+ stages {
 
   stage('Build') {
-   sh '''
-   echo "Building Java project..."
-   cd "Password Protection"
-   mkdir -p build
-   javac -d build src/*.java
-   echo "Build successful"
-   '''
+   steps {
+    sh 'echo Running build on Jenkins Agent Node'
+   }
   }
 
   stage('Test') {
-   sh '''
-   echo "Running tests..."
-   '''
+   steps {
+    sh 'echo Test stage running on agent'
+   }
   }
 
   stage('Deploy') {
-   sh '''
-   echo "Packaging application..."
-   cd "Password Protection"
-   jar cf FileEncrypter.jar -C build .
-   echo "Deployment successful"
-   '''
+   steps {
+    sh 'echo Deploy stage running on agent'
+   }
   }
 
-  echo "Pipeline executed successfully!"
-
- } catch (Exception e) {
-  echo "Pipeline failed!"
-  throw e
  }
-
 }
